@@ -1,5 +1,6 @@
 package com.javaguides.employeeservice.controller;
 
+import com.javaguides.employeeservice.dto.ApiResponseDto;
 import com.javaguides.employeeservice.dto.EmployeeDto;
 import com.javaguides.employeeservice.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,20 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeService.saveEmployee(employeeDto), HttpStatus.CREATED);
 
     }
-    @GetMapping("{id}")
+    /*@GetMapping("{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id){
         return new ResponseEntity<>(employeeService.getEmployeeById(id),HttpStatus.OK);
 
+    }*/
+
+    @GetMapping("{id}")
+    public ResponseEntity<ApiResponseDto>  getEmployeeByEmpId(@PathVariable Long id){
+        return new ResponseEntity<>(employeeService.getEmployeeByEmpId(id),HttpStatus.OK);
+
     }
+
     @GetMapping
-    public ResponseEntity<List<EmployeeDto>> getAllEmployee(){
-        return new ResponseEntity<>(employeeService.getAllEmployee(),HttpStatus.OK);
+    public ResponseEntity<List<ApiResponseDto>> getAllEmployee(){
+        return new ResponseEntity<>(employeeService.getAllEmployeeApi(),HttpStatus.OK);
     }
 }
