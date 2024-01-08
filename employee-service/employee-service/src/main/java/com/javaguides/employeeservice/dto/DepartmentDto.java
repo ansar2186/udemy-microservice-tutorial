@@ -8,4 +8,5 @@ public class DepartmentDto {
     private String departmentName;
     private String departmentDescription;
     private String departmentCode;
+    private String port;
 }

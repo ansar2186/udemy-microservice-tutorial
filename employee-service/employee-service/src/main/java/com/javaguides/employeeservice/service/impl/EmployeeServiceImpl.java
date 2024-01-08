@@ -9,6 +9,7 @@ import com.javaguides.employeeservice.service.ApiCleint;
 import com.javaguides.employeeservice.service.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private ApiCleint apiCleint;
+
+    @Autowired
+    private Environment environment;
 
     ModelMapper mapper = new ModelMapper();
 
@@ -50,6 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         EmployeeDto employeeDto = mapper.map(employee, EmployeeDto.class);
         DepartmentDto departmentDto = apiCleint.getDepartmentById(employee.getDepartmentCode());
+        //departmentDto.setPort(environment.getProperty("local.server.port"));
 
         ApiResponseDto apiResponseDto = new ApiResponseDto();
         apiResponseDto.setEmployee(employeeDto);
