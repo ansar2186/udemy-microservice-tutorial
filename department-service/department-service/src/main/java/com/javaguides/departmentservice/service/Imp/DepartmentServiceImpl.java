@@ -44,13 +44,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto getDepartmentById(String id) {
         Department department = departmentRepository.findDepartmentByDepartmentCode(id);
-        DepartmentDto departmentDto = new DepartmentDto(
+        return new DepartmentDto(
                 department.getId(),
                 department.getDepartmentName(),
                 department.getDepartmentDescription(),
-                department.getDepartmentCode(), environment.getProperty("local.server.port")
+                department.getDepartmentCode(),environment.getProperty("local.server.port")
         );
-        return departmentDto;
     }
 
     @Override
