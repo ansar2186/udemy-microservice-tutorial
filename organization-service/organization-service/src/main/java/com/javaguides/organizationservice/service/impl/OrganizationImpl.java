@@ -2,6 +2,7 @@ package com.javaguides.organizationservice.service.impl;
 
 import com.javaguides.organizationservice.Entity.Organization;
 import com.javaguides.organizationservice.dto.OrganizationDto;
+import com.javaguides.organizationservice.exception.ResourceNotFoundException;
 import com.javaguides.organizationservice.repository.OrganizationRepository;
 import com.javaguides.organizationservice.service.OrganizationService;
 import org.modelmapper.ModelMapper;
@@ -27,6 +28,9 @@ public class OrganizationImpl implements OrganizationService {
     @Override
     public OrganizationDto getOrganizationByCode(String orgCode) {
         Organization organizationByCode = organizationRepository.findByOrganizationCode(orgCode);
+        if (organizationByCode == null) {
+            throw new ResourceNotFoundException("Organization","organizationId",orgCode);
+        }
         return modelMapper.map(organizationByCode, OrganizationDto.class);
     }
 
@@ -39,11 +43,13 @@ public class OrganizationImpl implements OrganizationService {
     @Override
     public OrganizationDto updateOrganization(String OrgCode, OrganizationDto organizationDto) {
         Organization dbOrganization = organizationRepository.findByOrganizationCode(OrgCode);
+        if (dbOrganization == null) {
+            throw new ResourceNotFoundException("Organization","organizationId",OrgCode);
+        }
         dbOrganization.setOrganizationCode(organizationDto.getOrganizationCode());
         dbOrganization.setOrganizationName(organizationDto.getOrganizationName());
         dbOrganization.setOrganizationDescription(organizationDto.getOrganizationDescription());
         Organization savedOrganization = organizationRepository.save(dbOrganization);
-
         return modelMapper.map(savedOrganization,OrganizationDto.class);
     }
 }
